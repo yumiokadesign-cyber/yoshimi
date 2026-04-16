@@ -1,0 +1,5 @@
+images-raw/
+*.pdf
+screencapture-*.png
+DESIGN.md
+.DS_Store
