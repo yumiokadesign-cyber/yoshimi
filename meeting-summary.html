@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LPワークショップ事前MTG｜議事録サマリー</title>
+<style>
+  :root {
+    --bg: #faf9f7;
+    --surface: #ffffff;
+    --ink: #1a1a1a;
+    --ink-sub: #555;
+    --line: #e6e3de;
+    --accent: #d97757;
+    --accent-soft: #faede5;
+    --warn: #c2410c;
+    --warn-soft: #fff1e8;
+    --ok: #166534;
+    --ok-soft: #ecfdf5;
+    --blue: #1e40af;
+    --blue-soft: #eff6ff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.75;
+    font-feature-settings: "palt";
+  }
+  .container {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 48px 24px 96px;
+  }
+  header {
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 24px;
+    margin-bottom: 40px;
+  }
+  .eyebrow {
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  h1 {
+    font-size: 32px;
+    margin: 0 0 16px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    font-size: 14px;
+    color: var(--ink-sub);
+  }
+  .meta span strong { color: var(--ink); margin-right: 6px; }
+
+  h2 {
+    font-size: 22px;
+    margin: 56px 0 20px;
+    padding-left: 14px;
+    border-left: 4px solid var(--accent);
+    line-height: 1.4;
+  }
+  h3 {
+    font-size: 16px;
+    margin: 28px 0 12px;
+    color: var(--ink);
+    font-weight: 700;
+  }
+  p { margin: 0 0 14px; }
+
+  .tldr {
+    background: var(--accent-soft);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 24px;
+  }
+  .tldr h2 {
+    margin: 0 0 12px;
+    padding: 0;
+    border: 0;
+    font-size: 18px;
+    color: var(--accent);
+  }
+  .tldr ul { margin: 0; padding-left: 20px; }
+  .tldr li { margin-bottom: 8px; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 20px;
+  }
+
+  ul.plain {
+    padding-left: 20px;
+    margin: 0 0 14px;
+  }
+  ul.plain li { margin-bottom: 6px; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 16px 0;
+  }
+  @media (max-width: 640px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+  .tag-box {
+    border-radius: 10px;
+    padding: 16px 18px;
+    font-size: 14px;
+  }
+  .tag-box h4 {
+    margin: 0 0 8px;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .tag-box ul { margin: 0; padding-left: 18px; }
+  .tag-box li { margin-bottom: 4px; }
+  .ng { background: var(--warn-soft); border: 1px solid #fed7aa; }
+  .ng h4 { color: var(--warn); }
+  .ok { background: var(--ok-soft); border: 1px solid #bbf7d0; }
+  .ok h4 { color: var(--ok); }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0 18px;
+    font-size: 14px;
+  }
+  th, td {
+    border-bottom: 1px solid var(--line);
+    padding: 12px 10px;
+    text-align: left;
+    vertical-align: top;
+  }
+  th {
+    background: #f3f0eb;
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--ink-sub);
+  }
+  .owner {
+    display: inline-block;
+    font-size: 12px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .owner.team { background: var(--blue-soft); color: var(--blue); }
+
+  .timeline {
+    position: relative;
+    padding-left: 28px;
+  }
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 8px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: var(--line);
+  }
+  .t-row {
+    position: relative;
+    margin-bottom: 14px;
+  }
+  .t-row::before {
+    content: "";
+    position: absolute;
+    left: -26px;
+    top: 8px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--surface);
+    box-shadow: 0 0 0 1px var(--accent);
+  }
+  .t-time {
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+    color: var(--accent);
+    margin-bottom: 2px;
+  }
+  .t-title { font-weight: 600; }
+  .t-note { font-size: 13px; color: var(--ink-sub); }
+
+  blockquote {
+    margin: 14px 0;
+    padding: 12px 16px;
+    background: var(--bg);
+    border-left: 3px solid var(--accent);
+    font-size: 14px;
+    color: var(--ink-sub);
+    border-radius: 4px;
+  }
+  .note {
+    font-size: 13px;
+    color: var(--ink-sub);
+    font-style: italic;
+  }
+
+  footer {
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    font-size: 12px;
+    color: var(--ink-sub);
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <div class="eyebrow">MEETING MINUTES</div>
+  <h1>LPワークショップ 当日運営 事前打ち合わせ</h1>
+  <div class="meta">
+    <span><strong>日時:</strong> 深夜MTG（約2時間半）</span>
+    <span><strong>参加者:</strong> Kazumi Funada / yumi oka / ayaka hirose</span>
+    <span><strong>議題:</strong> 当日進行・懸念事項の洗い出し</span>
+  </div>
+</header>
+
+<section class="tldr">
+  <h2>🎯 このMTGで決まったこと（TL;DR）</h2>
+  <ul>
+    <li><strong>参加者の多くが「コピー出し」と「モデリング先選定」で詰まっている</strong>→ 未提出の6名に個別フォローを送る</li>
+    <li><strong>参加者は"画像もりもりLP"を参考に選んでいるが、AIでは再現できない</strong>→ 前提として伝え、期待値を合わせる</li>
+    <li><strong>当日は「よしみさんのLP」を題材にビフォー／アフターのデモを実施</strong>（3人で事前ブラッシュアップ）</li>
+    <li><strong>時間が2時間しかない</strong>（昼休憩後〜発表まで）→ GitHub/Vercel登録は事前アナウンスで済ませておく</li>
+    <li><strong>発表会に1時間確保</strong>（15:00〜16:00）→ 成果をシェアして満足度を上げる</li>
+    <li><strong>明日8:30から短時間のすり合わせMTG</strong>を追加で実施</li>
+  </ul>
+</section>
+
+<h2>1. 参加者の現状と懸念</h2>
+<div class="card">
+  <h3>提出状況</h3>
+  <p>現在7名が提出済み。<strong>未提出は6名ほど</strong>（あけみさん・はぬちゃん・さあや・あつこさん・あゆみん・ちよみさん 等）。</p>
+  <h3>詰まっているポイント</h3>
+  <ul class="plain">
+    <li>フォームへの入力内容が書けない（メインコピー／サブコピーが出てこない）</li>
+    <li>「何をどう入れたらいいコピーが出るか」のコツを知らない</li>
+    <li>既にやったことがある人は提出できているが、初学者は止まったまま</li>
+  </ul>
+  <h3>対応方針</h3>
+  <blockquote>
+    「LPの専門家として」というロールを与え、フォームをキャプチャ、自分の仕事内容を伝えて「いいコピーを10個出して」と投げるフロー。<br>
+    → これを<strong>個別メンションでリマインド</strong>し、本番前に解決させる。
+  </blockquote>
+</div>
+
+<h2>2. 「モデリング先」問題</h2>
+<div class="card">
+  <p>参加者が選んできた参考サイトが <strong>ほぼ全員「画像ゴリゴリLP」</strong>（プロ制作の画像貼り付け型）。AIでは再現不可能な装飾が中心。</p>
+
+  <div class="grid">
+    <div class="tag-box ng">
+      <h4>❌ AIで再現できないもの</h4>
+      <ul>
+        <li>画像で作られた見出しのあしらい</li>
+        <li>フォトショ加工が入ったバナー</li>
+        <li>細かいデコレーション・リボン等</li>
+        <li>レスポンシブ非対応の画像LP</li>
+      </ul>
+    </div>
+    <div class="tag-box ok">
+      <h4>✅ AIで表現できるもの</h4>
+      <ul>
+        <li>パララックス（背景固定スクロール）</li>
+        <li>フェードイン等の軽いアニメ</li>
+        <li>ホバーで色が変わるボタン</li>
+        <li>Before/Afterのスライダー表現</li>
+        <li>組んであるLPのレイアウト全般</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>当日伝えること</h3>
+  <ul class="plain">
+    <li>「皆さんが想像している画像LPは、素材がないと再現できません」と<strong>前提として明示</strong></li>
+    <li>代わりに「<strong>パララックス・動的表現でリッチに見せる方向性</strong>」を提案</li>
+    <li>画像加工はCanva領域 → そこは別サービス（バックエンド）として提案</li>
+  </ul>
+</div>
+
+<h2>3. AI感（Claude臭さ）を消す指導方針</h2>
+<div class="card">
+  <h3>Claudeが出しがちな"AI臭"</h3>
+  <ul class="plain">
+    <li>ベージュ／ホワイト／クリーム／オレンジ／テラコッタ系の色</li>
+    <li>彩度を落とした上品系グラデーション</li>
+    <li>善丸ゴシック・Noto Sans系のゴツめフォント</li>
+    <li>過剰な角丸（R値がきつい）</li>
+    <li>絵文字アイコンの多用</li>
+    <li>同じ装飾のカード3個並び</li>
+    <li>1pxの薄い境界線、左側のバー装飾</li>
+  </ul>
+
+  <h3>当日の流れ（案）</h3>
+  <ol>
+    <li>コピペで生成 → "そのまま感"のLPを出させる</li>
+    <li>「どこがAI臭いですか？」と問いかける</li>
+    <li>上記NG集を見せて「でしょ？」と気づかせる</li>
+    <li>ファーストビューだけを参考サイトで修正 → 色温度・余白が整う</li>
+    <li>確定FVをリファレンスに残り全体を修正 → 一貫性</li>
+    <li>微調整（余白・アニメ・角丸の数値）</li>
+  </ol>
+
+  <h3>Claudeへの指示で効く順番</h3>
+  <ol>
+    <li><strong>写真（キャプチャ）を見せる</strong> ← 最強</li>
+    <li>参考サイトのURL（HTMLソースごとがベスト）</li>
+    <li>文章で細かく説明（デザイン用語が分かる人向け）</li>
+  </ol>
+</div>
+
+<h2>4. ファーストビューの方向性議論</h2>
+<div class="card">
+  <p>3人で意見が分かれ、<strong>最終的に「静的LPのセオリー優先 + 余力があれば動的」</strong>で合意。</p>
+  <ul class="plain">
+    <li><strong>yumi:</strong> LPのセオリー通り。上部に◯◯の3つ並び＋参加費無料バナー、タイトル、サービス像。「一面で全てが分かる」型。</li>
+    <li><strong>Kazumi:</strong> 世界観重視。最初はふわっと、スタイリッシュに開かせて「何これおしゃれ」と引き込む型。</li>
+    <li><strong>ayaka:</strong> しっかり見せる型。お客さんも見慣れているので分かりやすさ優先。動的は余力があれば。</li>
+  </ul>
+  <blockquote>
+    結論：<strong>申込につながる効果的なLPが本質</strong>。自分のモデリング先に近づけつつ、おしゃれに寄せる。静的を一通り → 余力でゴージャス化。
+  </blockquote>
+</div>
+
+<h2>5. デモ題材：「よしみーず」プロジェクト</h2>
+<div class="card">
+  <p>よしみさんのLPを3人で事前ブラッシュアップし、<strong>ビフォー／アフターの見本</strong>として当日使う。</p>
+  <h3>盛り込みたい要素</h3>
+  <ul class="plain">
+    <li><strong>パララックス</strong>（背景画像を固定してスクロール）← 3人とも大好き</li>
+    <li>ファーストビューは文字を減らし、動的ビジュアル＋キャッチを中央に</li>
+    <li>ブランドカラーの統一・Googleフォント指定</li>
+    <li>ボタンホバーの色変化</li>
+    <li><strong>Before/Afterスライダー</strong>（同じ服で撮ってるので比較しやすい）</li>
+    <li>ロゴ流れる演出・ノイズテクスチャ等（流行り）</li>
+  </ul>
+  <p class="note">※ ビフォーのスクショを撮り忘れていた可能性あり → 最初の生成を再現して取得する</p>
+</div>
+
+<h2>6. 当日タイムライン（暫定）</h2>
+<div class="card">
+  <div class="timeline">
+    <div class="t-row">
+      <div class="t-time">9:00</div>
+      <div class="t-title">現地集合・設営</div>
+      <div class="t-note">プロジェクター接続確認（つかなかったらPCを掲げる…）</div>
+    </div>
+    <div class="t-row">
+      <div class="t-time">午前</div>
+      <div class="t-title">開発メインタイム</div>
+      <div class="t-note">自己紹介は省略、流れだけ説明して早速入る。3チーム体制でサポート。</div>
+    </div>
+    <div class="t-row">
+      <div class="t-time">12:00頃</div>
+      <div class="t-title">集合写真（昼休憩前に）</div>
+      <div class="t-note">帰る人が出る前に撮影。化粧直しの時間も確保。</div>
+    </div>
+    <div class="t-row">
+      <div class="t-time">12:15〜13:00</div>
+      <div class="t-title">ランチ休憩（45分）</div>
+    </div>
+    <div class="t-row">
+      <div class="t-time">13:00〜14:40</div>
+      <div class="t-title">開発続き＆GitHub/Vercel公開</div>
+      <div class="t-note">公開は「呪文を唱えるだけ」で済むよう事前登録を徹底。</div>
+    </div>
+    <div class="t-row">
+      <div class="t-time">15:00〜16:00</div>
+      <div class="t-title">発表会（1時間しっかり確保）</div>
+      <div class="t-note">成果共有で満足度UP。みんな饒舌になるので時間に余裕を。</div>
+    </div>
+    <div class="t-row">
+      <div class="t-time">16:00</div>
+      <div class="t-title">締め・アンケート記入（その場で）</div>
+      <div class="t-note">帰ってからだとやってくれない → 「今打ってください」方式。</div>
+    </div>
+    <div class="t-row">
+      <div class="t-time">16:30</div>
+      <div class="t-title">原状回復・撤収</div>
+    </div>
+  </div>
+</div>
+
+<h2>7. バックエンド戦略（最後に必ず伝える）</h2>
+<div class="card">
+  <ul class="plain">
+    <li>画像LPを作りたい人 / 時間をかけたくない人 → <strong>開発を個別受注</strong>OK</li>
+    <li>AIキャンプ（40万）には行けない人の受け皿として、<strong>私たち3人はデザイナーポジション</strong>で立つ</li>
+    <li>AIキャンプには現状デザイナーがいない ← ここが私たちの差別化</li>
+    <li>「第2回ワークショップ」を企画予定。今回の感想・事例を集めて告知素材に</li>
+    <li>参加者のストーリー投稿は<strong>スクショを取ってLPに掲載</strong>（消える前に）</li>
+  </ul>
+</div>
+
+<h2>8. アクションアイテム</h2>
+<table>
+  <thead>
+    <tr>
+      <th style="width:45%">タスク</th>
+      <th style="width:20%">担当</th>
+      <th style="width:35%">期日・メモ</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>未提出6名へ個別Slackアナウンス（クラウドコードでの詰まり解消方法）</td>
+      <td><span class="owner">Kazumi</span></td>
+      <td>今晩中</td>
+    </tr>
+    <tr>
+      <td>全体向けアナウンス（GitHub/Vercel事前アカウント作成のお願い）</td>
+      <td><span class="owner">ayaka</span></td>
+      <td>今晩中</td>
+    </tr>
+    <tr>
+      <td>design.md（デザイン指示MD）を用意・配布準備</td>
+      <td><span class="owner">yumi</span></td>
+      <td>明日まで</td>
+    </tr>
+    <tr>
+      <td>よしみさんLPをGitHubにアップし、3人で共同編集できるようにする</td>
+      <td><span class="owner">yumi</span></td>
+      <td>今すぐ</td>
+    </tr>
+    <tr>
+      <td>よしみさんLPのブラッシュアップ（パララックス・Before/After実装）</td>
+      <td><span class="owner team">3人共同</span></td>
+      <td>明日</td>
+    </tr>
+    <tr>
+      <td>当日進行表の仕上げ（挨拶・流れ・発表会を含む）</td>
+      <td><span class="owner">ayaka</span></td>
+      <td>明日〜当日朝</td>
+    </tr>
+    <tr>
+      <td>議事録を朝活用に送信</td>
+      <td><span class="owner">Kazumi</span></td>
+      <td>翌朝</td>
+    </tr>
+    <tr>
+      <td>すり合わせMTG（短時間）</td>
+      <td><span class="owner team">3人</span></td>
+      <td>明日 8:30〜</td>
+    </tr>
+    <tr>
+      <td>当日現地集合（迷子対策で一緒に向かう）</td>
+      <td><span class="owner team">3人</span></td>
+      <td>当日 9:00</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>9. 参考・補足メモ</h2>
+<div class="card">
+  <h3>デスクトップアプリ更新</h3>
+  <p>Claude Codeデスクトップアプリが大幅更新された（左下の歯車→再起動）。初心者はこちら推奨、ただしトークン消費が激しいので複雑な作業はターミナル版（黒い画面）も併用。</p>
+
+  <h3>design.md について</h3>
+  <p>Xで話題になっていたデザイン指示のMDファイル。「参考サイトを入れ込ませたらそのまま再現できた」という報告あり。当日までに整えて配布する。</p>
+
+  <h3>競合状況</h3>
+  <ul class="plain">
+    <li>マヤさん・さおりさん：AIワークショップ（¥19,800、3日×2h）をクライアントワーカー向けに開催予定</li>
+    <li>みきさん：AIキャンプにジョイン（講座生への展開狙い）</li>
+    <li>→ <strong>私たちはデザイナーポジションで早めに動く</strong></li>
+  </ul>
+</div>
+
+<footer>
+  Generated from Google Meet transcript · LP Workshop Preparation Meeting
+</footer>
+
+</div>
+</body>
+</html>
