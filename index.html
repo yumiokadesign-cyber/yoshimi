@@ -1184,11 +1184,21 @@ section { padding: var(--space-section) 0; }
 
 .profile__photo {
   aspect-ratio: 4 / 5;
-  border-radius: 12px;
-  font-size: 14px;
+  border-radius: 16px;
   max-width: 400px;
   margin: 0 auto;
   width: 100%;
+  overflow: hidden;
+  background: linear-gradient(180deg, #ffffff 0%, #f0f7ec 100%);
+  box-shadow: 0 12px 32px rgba(90, 143, 78, 0.12), 0 2px 6px rgba(0, 0, 0, 0.04);
+  position: relative;
+}
+.profile__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
 }
 
 .profile__name {
@@ -3358,7 +3368,9 @@ section > .container {
       <h2 class="section-head__title">はじめまして、鶴岡好美です</h2>
     </div>
     <div class="profile__inner">
-      <div class="ph profile__photo">プロフィール写真<br>（現在の笑顔）</div>
+      <div class="profile__photo">
+        <img src="images/coach-profile.png" alt="鶴岡好美 プロフィール写真" loading="lazy">
+      </div>
       <div>
         <p class="profile__name">鶴岡 好美</p>
         <p class="profile__role">50代からの食べ痩せダイエットコーチ</p>
