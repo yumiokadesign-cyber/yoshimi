@@ -1916,6 +1916,187 @@ section > .container {
   .cursor-dot, .cursor-ring { display: none; }
 }
 
+/* ============ ✦ Intro Splash ✦ ============ */
+.intro-splash {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0a1812;
+  overflow: hidden;
+  pointer-events: none;
+  animation: splashFadeOut 0.7s 1.55s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+.intro-splash__bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 70% at 28% 18%, rgba(212, 168, 64, 0.24) 0%, transparent 60%),
+    radial-gradient(ellipse 55% 60% at 75% 82%, rgba(232, 149, 84, 0.16) 0%, transparent 55%),
+    linear-gradient(135deg, #0a1812 0%, #1e4030 48%, #0a1812 100%);
+  animation: splashBgShift 3s ease-in-out infinite alternate;
+}
+@keyframes splashBgShift {
+  from { transform: scale(1); }
+  to   { transform: scale(1.06); }
+}
+
+.intro-splash__line {
+  position: absolute;
+  left: 50%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(212, 168, 64, 0.6) 50%, transparent);
+  transform: translateX(-50%) scaleX(0);
+  transform-origin: center;
+  animation: splashLineIn 0.7s 0.15s cubic-bezier(0.76, 0, 0.24, 1) forwards,
+             splashLineOut 0.4s 1.3s cubic-bezier(0.7, 0, 0.84, 0) forwards;
+  width: min(360px, 72vw);
+}
+.intro-splash__line--top { top: calc(50% - 110px); }
+.intro-splash__line--bot { bottom: calc(50% - 130px); }
+@keyframes splashLineIn  { to { transform: translateX(-50%) scaleX(1); } }
+@keyframes splashLineOut { to { transform: translateX(-50%) scaleX(0); opacity: 0; } }
+
+.intro-splash__inner {
+  position: relative;
+  text-align: center;
+  z-index: 2;
+  padding: 0 24px;
+}
+
+.intro-splash__eyebrow {
+  display: block;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: 0.5em;
+  color: rgba(240, 220, 150, 0.75);
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  opacity: 0;
+  transform: translateY(6px);
+  animation: splashEyebrowIn 0.6s 0.3s ease forwards,
+             splashEyebrowOut 0.4s 1.25s ease forwards;
+}
+@keyframes splashEyebrowIn  { to { opacity: 1; transform: translateY(0); } }
+@keyframes splashEyebrowOut { to { opacity: 0; transform: translateY(-6px); } }
+
+.intro-splash__title {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 700;
+  line-height: 0.95;
+  margin: 0;
+  display: inline-flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: clamp(12px, 2vw, 22px);
+  padding: 8px 0 14px;
+  overflow: hidden;
+}
+
+.intro-splash__word {
+  display: inline-block;
+  background: linear-gradient(135deg,
+    #F8EDCC 0%, #D4A840 28%, #F2DC88 50%,
+    #FAF2DE 66%, #C48A18 86%, #F5E8C4 100%);
+  background-size: 220% 220%;
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+          color: transparent;
+  filter: drop-shadow(0 6px 28px rgba(212, 168, 64, 0.45));
+  transform: translateY(105%);
+  opacity: 0;
+  animation:
+    splashWordIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards,
+    splashWordOut 0.55s cubic-bezier(0.7, 0, 0.84, 0) forwards,
+    splashShimmer 2.4s linear infinite;
+}
+.intro-splash__word--num  {
+  font-size: clamp(88px, 20vw, 180px);
+  animation-delay: 0.25s, 1.2s, 0.8s;
+}
+.intro-splash__word--days {
+  font-size: clamp(56px, 13vw, 120px);
+  animation-delay: 0.4s,  1.28s, 0.95s;
+}
+
+@keyframes splashWordIn {
+  0%   { transform: translateY(115%) skewY(6deg); opacity: 0; letter-spacing: 0.1em; }
+  100% { transform: translateY(0)    skewY(0);    opacity: 1; letter-spacing: 0.02em; }
+}
+@keyframes splashWordOut {
+  0%   { transform: translateY(0);   opacity: 1; filter: blur(0) drop-shadow(0 6px 28px rgba(212,168,64,0.45)); }
+  100% { transform: translateY(-40%); opacity: 0; filter: blur(6px) drop-shadow(0 2px 8px rgba(212,168,64,0)); }
+}
+@keyframes splashShimmer {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+.intro-splash__sub {
+  display: block;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(18px, 3.6vw, 30px);
+  letter-spacing: 0.36em;
+  text-transform: uppercase;
+  color: rgba(250, 242, 222, 0.94);
+  margin-top: 18px;
+  opacity: 0;
+  transform: translateY(14px);
+  animation:
+    splashSubIn 0.7s 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards,
+    splashSubOut 0.5s 1.3s cubic-bezier(0.7, 0, 0.84, 0) forwards;
+}
+@keyframes splashSubIn  { to { opacity: 1; transform: translateY(0); letter-spacing: 0.36em; } }
+@keyframes splashSubOut { to { opacity: 0; transform: translateY(-10px); filter: blur(4px); } }
+
+@keyframes splashFadeOut {
+  0%   { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.04); visibility: hidden; }
+}
+
+/* Lock scroll + hide hero during splash; fade it in softly after */
+body.is-splashing { overflow: hidden; }
+body.is-splashing .hero,
+body.is-splashing .marquee,
+body.is-splashing .sticky-cta {
+  opacity: 0;
+}
+body:not(.is-splashing) .hero,
+body:not(.is-splashing) .marquee,
+body:not(.is-splashing) .sticky-cta {
+  opacity: 1;
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Pause hero fade-up animations while splashing, then resume */
+body.is-splashing .hero__content-inner,
+body.is-splashing .hero__badge,
+body.is-splashing .hero__lead,
+body.is-splashing .hero__title,
+body.is-splashing .hero__meta,
+body.is-splashing .hero__cta,
+body.is-splashing .hero__scroll {
+  animation-play-state: paused !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-splash { display: none !important; }
+  body.is-splashing { overflow: visible; }
+  body.is-splashing * { animation-play-state: running !important; }
+  body.is-splashing .hero,
+  body.is-splashing .marquee,
+  body.is-splashing .sticky-cta { opacity: 1; }
+}
+
 /* ============ ✦ LINE Chat Mockup ✦ ============ */
 .line-mocks {
   display: grid;
@@ -2994,7 +3175,22 @@ section > .container {
 }
 </style>
 </head>
-<body>
+<body class="is-splashing">
+
+<!-- ✦ Intro Splash ✦ -->
+<div class="intro-splash" aria-hidden="true">
+  <div class="intro-splash__bg"></div>
+  <div class="intro-splash__line intro-splash__line--top"></div>
+  <div class="intro-splash__inner">
+    <span class="intro-splash__eyebrow">Sleeveless Journey</span>
+    <h1 class="intro-splash__title">
+      <span class="intro-splash__word intro-splash__word--num">5</span>
+      <span class="intro-splash__word intro-splash__word--days">Days</span>
+    </h1>
+    <span class="intro-splash__sub">Challenge</span>
+  </div>
+  <div class="intro-splash__line intro-splash__line--bot"></div>
+</div>
 
 <!-- ✦ Cursor follow elements ✦ -->
 <div class="cursor-ring" aria-hidden="true"></div>
@@ -3737,6 +3933,24 @@ section > .container {
 </footer>
 
 <script>
+/* ---- Intro splash: unlock site after splash animation ---- */
+(function () {
+  const body = document.body;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) {
+    body.classList.remove('is-splashing');
+    const sp = document.querySelector('.intro-splash');
+    if (sp) sp.remove();
+    return;
+  }
+  // Total splash lifecycle: ~2.25s (content out at ~1.8s, overlay gone at ~2.25s)
+  setTimeout(() => { body.classList.remove('is-splashing'); }, 1700);
+  setTimeout(() => {
+    const sp = document.querySelector('.intro-splash');
+    if (sp) sp.remove();
+  }, 2500);
+})();
+
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
