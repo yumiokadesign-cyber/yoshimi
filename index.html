@@ -605,30 +605,64 @@ section { padding: var(--space-section) 0; }
 /* 鶴岡さん自身のビフォーアフター（フィーチャード） */
 .result-featured {
   background: var(--color-white);
-  border-radius: 20px;
-  padding: 40px 24px;
-  margin-bottom: 56px;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+  border-radius: 24px;
+  padding: 48px 28px;
+  margin-bottom: 64px;
+  box-shadow:
+    0 20px 60px -20px rgba(42, 42, 42, 0.15),
+    0 4px 16px rgba(0, 0, 0, 0.04);
+  position: relative;
+  isolation: isolate;
+}
+.result-featured::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg,
+    rgba(212, 168, 64, 0.5) 0%,
+    rgba(212, 168, 64, 0.08) 35%,
+    rgba(212, 168, 64, 0.4) 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
 }
 
 .result-featured__label {
   display: block;
   text-align: center;
-  font-family: var(--font-accent);
-  font-size: 14px;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 11px;
   font-weight: 700;
-  color: var(--color-primary);
-  margin-bottom: 8px;
-  letter-spacing: 0.2em;
+  color: var(--color-accent-dark);
+  margin-bottom: 14px;
+  letter-spacing: 0.36em;
+  text-transform: uppercase;
+}
+
+.result-featured__label::before,
+.result-featured__label::after {
+  content: "✦";
+  display: inline-block;
+  margin: 0 12px;
+  color: var(--color-accent);
+  font-style: normal;
+  font-size: 9px;
+  vertical-align: middle;
+  opacity: 0.7;
 }
 
 .result-featured__title {
   text-align: center;
   font-family: var(--font-accent);
-  font-size: 22px;
+  font-size: clamp(20px, 3.6vw, 26px);
   font-weight: 700;
-  margin-bottom: 32px;
-  line-height: 1.5;
+  margin-bottom: 40px;
+  line-height: 1.55;
+  letter-spacing: 0.02em;
 }
 
 .result-featured__title strong {
@@ -688,18 +722,52 @@ section { padding: var(--space-section) 0; }
   margin-top: 24px;
 }
 
-/* ============ BA スライダー ============ */
+/* ============ ✦ BA スライダー (Elegant Redesign) ✦ ============ */
 .ba-slider {
+  --pos: 50%;
   position: relative;
   overflow: hidden;
-  border-radius: 12px;
+  border-radius: 16px;
   cursor: ew-resize;
   user-select: none;
   -webkit-user-select: none;
   touch-action: none;
+  isolation: isolate;
+  background: #0a0a0a;
+  box-shadow:
+    0 20px 60px -15px rgba(42, 42, 42, 0.22),
+    0 4px 16px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.4s ease, transform 0.4s ease;
 }
 
-.ba-slider img {
+.ba-slider:hover {
+  box-shadow:
+    0 28px 80px -15px rgba(42, 42, 42, 0.30),
+    0 6px 20px rgba(0, 0, 0, 0.12),
+    0 0 0 1px rgba(212, 168, 64, 0.25);
+}
+
+/* Gold gradient border frame */
+.ba-slider::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: linear-gradient(135deg,
+    rgba(212, 168, 64, 0.65) 0%,
+    rgba(242, 220, 136, 0.15) 28%,
+    rgba(212, 168, 64, 0.55) 52%,
+    rgba(250, 242, 222, 0.15) 78%,
+    rgba(212, 168, 64, 0.65) 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.ba-slider > img {
   display: block;
   width: 100%;
   height: 100%;
@@ -707,137 +775,313 @@ section { padding: var(--space-section) 0; }
   pointer-events: none;
 }
 
+/* After side uses clip-path for buttery-smooth, glitch-free reveal */
 .ba-slider__after {
   position: absolute;
   inset: 0;
-  overflow: hidden;
-  width: 50%;
+  width: 100%;
+  height: 100%;
+  clip-path: polygon(0 0, var(--pos) 0, var(--pos) 100%, 0 100%);
+  -webkit-clip-path: polygon(0 0, var(--pos) 0, var(--pos) 100%, 0 100%);
+  will-change: clip-path;
 }
 
 .ba-slider__after img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: var(--slider-width, 100%);
+  display: block;
+  width: 100%;
   height: 100%;
+  object-fit: cover;
+  pointer-events: none;
 }
 
+/* Smooth transition when not being dragged */
+.ba-slider:not(.is-dragging) .ba-slider__after,
+.ba-slider:not(.is-dragging) .ba-slider__handle {
+  transition: clip-path 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              left 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Divider line */
 .ba-slider__handle {
   position: absolute;
   top: 0;
   bottom: 0;
-  left: 50%;
-  width: 3px;
-  background: var(--color-white);
-  box-shadow: 0 0 8px rgba(0,0,0,0.35);
+  left: var(--pos);
+  width: 2px;
+  background: linear-gradient(180deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.95) 14%,
+    rgba(255, 255, 255, 0.95) 86%,
+    rgba(255, 255, 255, 0) 100%);
   z-index: 3;
   transform: translateX(-50%);
+  pointer-events: none;
+  will-change: left;
+  box-shadow: 0 0 12px rgba(212, 168, 64, 0.35);
 }
 
+/* Handle circle — glass + gold */
 .ba-slider__handle::after {
   content: "";
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 44px;
-  height: 44px;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
-  background: var(--color-white);
-  box-shadow: 0 2px 12px rgba(0,0,0,0.25);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow:
+    0 6px 24px rgba(0, 0, 0, 0.35),
+    0 0 0 1.5px rgba(212, 168, 64, 0.55),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.8);
 }
 
+/* Handle chevron icon */
 .ba-slider__handle::before {
-  content: "◂ ▸";
+  content: "";
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 12px;
-  color: var(--color-text);
+  width: 22px;
+  height: 12px;
   z-index: 4;
-  white-space: nowrap;
-  letter-spacing: 2px;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 12' fill='none'%3E%3Cpath d='M7 2L3 6l4 4M15 2l4 4-4 4' stroke='%238B6F3A' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
 }
 
+/* Subtle pulse ring around handle on initial load */
+.ba-slider:not(.is-touched) .ba-slider__handle::after {
+  animation: baHandlePulse 2.4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+@keyframes baHandlePulse {
+  0%, 100% {
+    box-shadow:
+      0 6px 24px rgba(0, 0, 0, 0.35),
+      0 0 0 1.5px rgba(212, 168, 64, 0.55),
+      0 0 0 0 rgba(212, 168, 64, 0.55),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+  }
+  50% {
+    box-shadow:
+      0 6px 24px rgba(0, 0, 0, 0.35),
+      0 0 0 1.5px rgba(212, 168, 64, 0.35),
+      0 0 0 14px rgba(212, 168, 64, 0),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+  }
+}
+
+/* Labels — elegant serif italic */
 .ba-slider__label {
   position: absolute;
-  top: 12px;
-  font-size: 11px;
-  font-family: var(--font-accent);
+  top: 14px;
+  font-family: var(--font-display);
+  font-style: italic;
   font-weight: 700;
+  font-size: 11px;
   color: var(--color-white);
-  padding: 3px 12px;
+  padding: 4px 14px;
   border-radius: 999px;
-  letter-spacing: 0.15em;
-  z-index: 2;
-  text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+  letter-spacing: 0.28em;
+  z-index: 4;
+  text-transform: uppercase;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.45);
 }
 
 .ba-slider__label--before {
-  left: 12px;
-  background: rgba(42,42,42,0.7);
+  left: 14px;
+  background: rgba(20, 20, 20, 0.5);
 }
 
 .ba-slider__label--after {
-  right: 12px;
-  background: rgba(232,149,84,0.85);
+  right: 14px;
+  background: rgba(212, 135, 90, 0.55);
+}
+
+/* Drag hint that fades out on first interaction */
+.ba-slider__hint {
+  position: absolute;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 10px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.92);
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  pointer-events: none;
+  animation: baHintFloat 2.6s ease-in-out infinite;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.ba-slider__hint::before,
+.ba-slider__hint::after { content: "↔"; font-style: normal; opacity: 0.8; }
+.ba-slider.is-touched .ba-slider__hint {
+  opacity: 0;
+  transform: translateX(-50%) translateY(8px);
+}
+@keyframes baHintFloat {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-3px); }
+}
+
+/* Shimmer sweep that runs once on intro */
+.ba-slider.is-intro::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.14) 45%,
+    rgba(212, 168, 64, 0.18) 50%,
+    rgba(255, 255, 255, 0.14) 55%,
+    transparent 70%);
+  transform: translateX(-100%);
+  animation: baIntroSweep 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  z-index: 6;
+  pointer-events: none;
+  border-radius: inherit;
+}
+@keyframes baIntroSweep {
+  to { transform: translateX(100%); }
+}
+
+/* Mobile: smaller handle */
+@media (max-width: 480px) {
+  .ba-slider__handle::after { width: 44px; height: 44px; }
+  .ba-slider__handle::before { width: 18px; height: 10px; }
+  .ba-slider__label { font-size: 10px; padding: 3px 10px; letter-spacing: 0.22em; }
+  .ba-slider__hint { font-size: 9px; padding: 5px 12px; }
 }
 
 /* フィーチャードスライダー */
 .result-featured .ba-slider {
-  max-width: 400px;
-  margin: 0 auto 24px;
+  max-width: 420px;
+  margin: 0 auto 32px;
   aspect-ratio: 3 / 4;
+  /* Body alignment adjustment for coach photos.
+     Before photo has coach at ~40% x; After at ~52% x.
+     Scale slightly and shift to align their body centerlines. */
+  --align-scale: 1.14;
+  --after-x: -3%;
+  --after-y: 0%;
+  --before-x: 6%;
+  --before-y: 0%;
+}
+.result-featured .ba-slider > img {
+  transform: scale(var(--align-scale)) translate(var(--after-x), var(--after-y));
+  transform-origin: center top;
+}
+.result-featured .ba-slider__after img {
+  transform: scale(var(--align-scale)) translate(var(--before-x), var(--before-y));
+  transform-origin: center top;
 }
 
 /* カードスライダー */
 .result-card .ba-slider {
   aspect-ratio: 3 / 4;
-  border-radius: 0;
+  border-radius: 14px 14px 0 0;
+  margin: 8px 8px 0;
 }
 
-/* 受講生ギャラリー */
+/* 受講生ギャラリー — elegant heading */
 .results__students-title {
   text-align: center;
   font-family: var(--font-accent);
-  font-size: 22px;
+  font-size: clamp(20px, 3.4vw, 26px);
   font-weight: 700;
-  margin-bottom: 40px;
+  margin-bottom: 56px;
   position: relative;
+  letter-spacing: 0.04em;
 }
 
-.results__students-title::before,
+.results__students-title::before {
+  content: "Students' Transformation";
+  display: block;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--color-accent-dark);
+  margin-bottom: 12px;
+  width: auto;
+  height: auto;
+  background: none;
+  vertical-align: baseline;
+}
+
 .results__students-title::after {
   content: "";
-  display: inline-block;
+  display: block;
   width: 40px;
   height: 1px;
-  background: var(--color-primary);
-  vertical-align: middle;
-  margin: 0 16px;
+  background: linear-gradient(90deg, transparent, var(--color-primary) 50%, transparent);
+  margin: 16px auto 0;
+  vertical-align: baseline;
 }
 
 .results-grid {
   display: grid;
-  gap: 24px;
+  gap: 28px;
 }
 
+/* Elegant result card with gold accent */
 .result-card {
   background: var(--color-white);
-  border-radius: 12px;
+  border-radius: 18px;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow:
+    0 8px 32px -8px rgba(42, 42, 42, 0.10),
+    0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  isolation: isolate;
 }
-
+.result-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg,
+    rgba(212, 168, 64, 0.45) 0%,
+    rgba(212, 168, 64, 0.08) 40%,
+    rgba(212, 168, 64, 0.35) 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
 .result-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  transform: translateY(-6px);
+  box-shadow:
+    0 20px 48px -12px rgba(42, 42, 42, 0.18),
+    0 4px 14px rgba(0, 0, 0, 0.06);
 }
+.result-card:hover::before { opacity: 1; }
 
 .result-card__visual {
   display: grid;
@@ -3579,38 +3823,74 @@ document.querySelectorAll('.fade-in, .reveal, .reveal-left, .reveal-right, .reve
   update();
 })();
 
-/* ---- BA Slider ---- */
+/* ---- BA Slider (Squoosh-style: click/drag only, instant clip-path) ---- */
 document.querySelectorAll('[data-ba-slider]').forEach((slider) => {
-  const afterWrap = slider.querySelector('.ba-slider__after');
-  const handle = slider.querySelector('.ba-slider__handle');
   let dragging = false;
 
-  function setPosition(x) {
-    const rect = slider.getBoundingClientRect();
-    let pct = ((x - rect.left) / rect.width) * 100;
-    pct = Math.max(2, Math.min(98, pct));
-    afterWrap.style.width = pct + '%';
-    handle.style.left = pct + '%';
-    /* afterの画像を親幅に合わせる */
-    const afterImg = afterWrap.querySelector('img');
-    afterImg.style.width = (rect.width) + 'px';
+  // Ensure hint exists (fades on first touch)
+  if (!slider.querySelector('.ba-slider__hint')) {
+    const hint = document.createElement('span');
+    hint.className = 'ba-slider__hint';
+    hint.textContent = 'Drag';
+    slider.appendChild(hint);
   }
 
-  slider.addEventListener('mousedown', (e) => { dragging = true; setPosition(e.clientX); });
-  slider.addEventListener('touchstart', (e) => { dragging = true; setPosition(e.touches[0].clientX); }, { passive: true });
+  function applyPos(x) {
+    const rect = slider.getBoundingClientRect();
+    let pct = ((x - rect.left) / rect.width) * 100;
+    pct = Math.max(0, Math.min(100, pct));
+    slider.style.setProperty('--pos', pct + '%');
+  }
 
-  window.addEventListener('mousemove', (e) => { if (dragging) { e.preventDefault(); setPosition(e.clientX); } });
-  window.addEventListener('touchmove', (e) => { if (dragging) setPosition(e.touches[0].clientX); }, { passive: true });
+  function markTouched() {
+    if (!slider.classList.contains('is-touched')) slider.classList.add('is-touched');
+  }
 
-  window.addEventListener('mouseup', () => { dragging = false; });
-  window.addEventListener('touchend', () => { dragging = false; });
+  function onDown(e) {
+    dragging = true;
+    markTouched();
+    slider.classList.add('is-dragging');
+    if (e.pointerId !== undefined) {
+      try { slider.setPointerCapture(e.pointerId); } catch (_) {}
+    }
+    applyPos(e.clientX);
+  }
 
-  /* 初期位置50%時のafter画像幅セット */
-  const ro = new ResizeObserver(() => {
-    const afterImg = afterWrap.querySelector('img');
-    afterImg.style.width = slider.offsetWidth + 'px';
-  });
-  ro.observe(slider);
+  function onMove(e) {
+    if (!dragging) return;
+    applyPos(e.clientX);
+  }
+
+  function onUp() {
+    dragging = false;
+    slider.classList.remove('is-dragging');
+  }
+
+  if (window.PointerEvent) {
+    slider.addEventListener('pointerdown', (e) => { e.preventDefault(); onDown(e); });
+    slider.addEventListener('pointermove', onMove);
+    slider.addEventListener('pointerup', onUp);
+    slider.addEventListener('pointercancel', onUp);
+    slider.addEventListener('pointerleave', (e) => { if (dragging) return; });
+  } else {
+    slider.addEventListener('mousedown', (e) => { e.preventDefault(); onDown(e); });
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseup', onUp);
+    slider.addEventListener('touchstart', (e) => onDown({clientX: e.touches[0].clientX}), { passive: true });
+    slider.addEventListener('touchmove', (e) => onMove({clientX: e.touches[0].clientX}), { passive: true });
+    slider.addEventListener('touchend', onUp);
+  }
+
+  // Subtle shimmer on first scroll-into-view (no auto position change)
+  const introObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      introObserver.unobserve(entry.target);
+      slider.classList.add('is-intro');
+      setTimeout(() => slider.classList.remove('is-intro'), 1500);
+    });
+  }, { threshold: 0.35 });
+  introObserver.observe(slider);
 });
 </script>
 
